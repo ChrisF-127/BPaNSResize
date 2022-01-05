@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<SY_BNR.BiosculpterPodTitle>Biosculpter Pod</SY_BNR.BiosculpterPodTitle>
+	<SY_BNR.BiosculpterPodDesc>Biosculpter pod dimensions
+Changes require reloading to apply properly!</SY_BNR.BiosculpterPodDesc>
+	<SY_BNR.NeuralSuperchargerTitle>Neural Supercharger</SY_BNR.NeuralSuperchargerTitle>
+	<SY_BNR.NeuralSuperchargerDesc>Neural supercharger dimensions
+Changes require reloading to apply properly!</SY_BNR.NeuralSuperchargerDesc>
+	
+	<SY_BNR.BiosculpterPodSize_Standard_3x2>3x2 (Standard)</SY_BNR.BiosculpterPodSize_Standard_3x2>
+	<SY_BNR.BiosculpterPodSize_Modded_2x2>2x2</SY_BNR.BiosculpterPodSize_Modded_2x2>
+	<SY_BNR.BiosculpterPodSize_Modded_1x2>1x2</SY_BNR.BiosculpterPodSize_Modded_1x2>
+	<SY_BNR.BiosculpterPodSize_Modded_1x3>1x3</SY_BNR.BiosculpterPodSize_Modded_1x3>
+	
+	<SY_BNR.NeuralSuperchargerSize_Standard_1x3>1x3 (Standard)</SY_BNR.NeuralSuperchargerSize_Standard_1x3>
+	<SY_BNR.NeuralSuperchargerSize_Modded_1x2>1x2</SY_BNR.NeuralSuperchargerSize_Modded_1x2>
+	
+</LanguageData>
