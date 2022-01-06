@@ -225,7 +225,7 @@ namespace BPaNSResize
 		{
 			GraphicData graphicData;
 			IntVec2 buildingSize;
-			Vector2 fleckSize;
+			Vector2 fleckSize = new Vector2(1, 2);
 			IntVec3 interactionCellOffset = new IntVec3(0, 0, 2);
 			switch (value)
 			{
@@ -238,24 +238,19 @@ namespace BPaNSResize
 				case BiosculpterPodSize.Modded_2x2_Left:
 					graphicData = StaticStuff.BiosculpterPodGraphicData_2x2_Left;
 					buildingSize = new IntVec2(2, 2);
-					fleckSize = new Vector2(1, 2);
 					interactionCellOffset = new IntVec3(1, 0, 2);
 					break;
 				case BiosculpterPodSize.Modded_2x2_Right:
 					graphicData = StaticStuff.BiosculpterPodGraphicData_2x2_Right;
 					buildingSize = new IntVec2(2, 2);
-					fleckSize = new Vector2(1, 2);
-					interactionCellOffset = new IntVec3(0, 0, 2);
 					break;
 				case BiosculpterPodSize.Modded_1x2:
 					graphicData = StaticStuff.BiosculpterPodGraphicData_1x2;
 					buildingSize = new IntVec2(1, 2);
-					fleckSize = new Vector2(1, 2);
 					break;
 				case BiosculpterPodSize.Modded_1x3:
 					graphicData = StaticStuff.BiosculpterPodGraphicData_1x3;
 					buildingSize = new IntVec2(1, 3);
-					fleckSize = new Vector2(1, 2);
 					break;
 			}
 
