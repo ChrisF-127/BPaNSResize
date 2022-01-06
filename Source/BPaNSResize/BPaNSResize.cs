@@ -18,7 +18,8 @@ namespace BPaNSResize
 	{
 		public static ThingDef BiosculpterPodDef;
 		public static GraphicData BiosculpterPodGraphicData_Standard;
-		public static GraphicData BiosculpterPodGraphicData_2x2 = new GraphicData();
+		public static GraphicData BiosculpterPodGraphicData_2x2_Left = new GraphicData();
+		public static GraphicData BiosculpterPodGraphicData_2x2_Right = new GraphicData();
 		public static GraphicData BiosculpterPodGraphicData_1x2 = new GraphicData();
 		public static GraphicData BiosculpterPodGraphicData_1x3 = new GraphicData();
 
@@ -39,15 +40,25 @@ namespace BPaNSResize
 			// Standard shadow height / length
 			var shadowDataVolumeY = BiosculpterPodGraphicData_Standard.shadowData.BaseY;
 
-			// Initialize 2x2 Biosculpter Pod graphic
-			BiosculpterPodGraphicData_2x2.CopyFrom(BiosculpterPodGraphicData_Standard);
-			BiosculpterPodGraphicData_2x2.texPath = "BiosculpterPod/BiosculpterPod_2x2";
-			BiosculpterPodGraphicData_2x2.drawSize = new Vector2(2, 2);
-			BiosculpterPodGraphicData_2x2.shadowData = new ShadowData
+			// Initialize 2x2 Biosculpter Pod graphic (left handed)
+			BiosculpterPodGraphicData_2x2_Left.CopyFrom(BiosculpterPodGraphicData_Standard);
+			BiosculpterPodGraphicData_2x2_Left.texPath = "BiosculpterPod/BiosculpterPod_2x2_Left";
+			BiosculpterPodGraphicData_2x2_Left.drawSize = new Vector2(2, 2);
+			BiosculpterPodGraphicData_2x2_Left.shadowData = new ShadowData
 			{
 				volume = new Vector3(1.9f, shadowDataVolumeY, 1.9f)
 			};
-			BiosculpterPodGraphicData_2x2.ExplicitlyInitCachedGraphic();
+			BiosculpterPodGraphicData_2x2_Left.ExplicitlyInitCachedGraphic();
+
+			// Initialize 2x2 Biosculpter Pod graphic (right handed)
+			BiosculpterPodGraphicData_2x2_Right.CopyFrom(BiosculpterPodGraphicData_Standard);
+			BiosculpterPodGraphicData_2x2_Right.texPath = "BiosculpterPod/BiosculpterPod_2x2_Right";
+			BiosculpterPodGraphicData_2x2_Right.drawSize = new Vector2(2, 2);
+			BiosculpterPodGraphicData_2x2_Right.shadowData = new ShadowData
+			{
+				volume = new Vector3(1.9f, shadowDataVolumeY, 1.9f)
+			};
+			BiosculpterPodGraphicData_2x2_Right.ExplicitlyInitCachedGraphic();
 
 			// Initialize 1x2 Biosculpter Pod graphic
 			BiosculpterPodGraphicData_1x2.CopyFrom(BiosculpterPodGraphicData_Standard);
@@ -143,7 +154,8 @@ namespace BPaNSResize
 		enum BiosculpterPodSize
 		{
 			Standard_3x2,
-			Modded_2x2,
+			Modded_2x2_Left,
+			Modded_2x2_Right,
 			Modded_1x2,
 			Modded_1x3,
 		}
@@ -223,11 +235,17 @@ namespace BPaNSResize
 					buildingSize = new IntVec2(3, 2);
 					fleckSize = new Vector2(2, 2);
 					break;
-				case BiosculpterPodSize.Modded_2x2:
-					graphicData = StaticStuff.BiosculpterPodGraphicData_2x2;
+				case BiosculpterPodSize.Modded_2x2_Left:
+					graphicData = StaticStuff.BiosculpterPodGraphicData_2x2_Left;
 					buildingSize = new IntVec2(2, 2);
 					fleckSize = new Vector2(1, 2);
 					interactionCellOffset = new IntVec3(1, 0, 2);
+					break;
+				case BiosculpterPodSize.Modded_2x2_Right:
+					graphicData = StaticStuff.BiosculpterPodGraphicData_2x2_Right;
+					buildingSize = new IntVec2(2, 2);
+					fleckSize = new Vector2(1, 2);
+					interactionCellOffset = new IntVec3(0, 0, 2);
 					break;
 				case BiosculpterPodSize.Modded_1x2:
 					graphicData = StaticStuff.BiosculpterPodGraphicData_1x2;
@@ -355,57 +373,30 @@ namespace BPaNSResize
 
 		public static Vector3 ModifyPawnDrawOffset(ThingWithComps parent)
 		{
-			var size = parent.def.size;
-			if (size.x == 2 && size.z == 2) // 2x2
-			{
-				var rotation = parent.Rotation;
-				if (rotation == Rot4.North)
-					return parent.DrawPos + new Vector3(0.5f, 0, 0.1f);
-				if (rotation == Rot4.South)
-					return parent.DrawPos + new Vector3(-0.5f, 0, 0);
-				if (rotation == Rot4.East)
-					return parent.DrawPos + new Vector3(0, 0, -0.5f);
-				if (rotation == Rot4.West)
-					return parent.DrawPos + new Vector3(0, 0, 0.3f);
-			}
-			else if (size.x == 1 && size.z == 2) // 1x2
-			{
-				var rotation = parent.Rotation;
-				if (rotation == Rot4.North)
-					return parent.DrawPos;// + new Vector3(0, 0, 0);
-				if (rotation == Rot4.South)
-					return parent.DrawPos + new Vector3(0, 0, -0.1f);
-				if (rotation == Rot4.East)
-					return parent.DrawPos + new Vector3(0, 0, -0.1f);
-				if (rotation == Rot4.West)
-					return parent.DrawPos + new Vector3(0, 0, -0.1f);
-			}
-			else if (size.x == 1 && size.z == 3) // 1x3
-			{
-				var rotation = parent.Rotation;
-				if (rotation == Rot4.North)
-					return parent.DrawPos + new Vector3(0, 0, 0.5f);
-				if (rotation == Rot4.South)
-					return parent.DrawPos + new Vector3(0, 0, -0.5f);
-				if (rotation == Rot4.East)
-					return parent.DrawPos + new Vector3(0.5f, 0, -0.1f);
-				if (rotation == Rot4.West)
-					return parent.DrawPos + new Vector3(-0.5f, 0, -0.1f);
-			}
+			var rotation = parent.Rotation;
+			var interactionCell = parent.InteractionCell.ToVector3();
+			if (rotation == Rot4.South)
+				return interactionCell + new Vector3(0.5f, 0, 2.0f);
+			if (rotation == Rot4.West)
+				return interactionCell + new Vector3(2.0f, 0, 0.35f);
+			if (rotation == Rot4.North)
+				return interactionCell + new Vector3(0.5f, 0, -0.9f);
+			if (rotation == Rot4.East)
+				return interactionCell + new Vector3(-1.0f, 0, 0.35f);
 			return parent.DrawPos;
 		}
 
 		public static TargetInfo ModifyBiosculpterTargetInfo(ThingWithComps parent)
 		{
 			var rot = parent.Rotation;
+			if (rot == Rot4.South)
+				return new TargetInfo(parent.InteractionCell + new IntVec3(0, 0, 2), parent.Map);
+			if (rot == Rot4.West)
+				return new TargetInfo(parent.InteractionCell + new IntVec3(2, 0, 0), parent.Map);
 			if (rot == Rot4.North)
 				return new TargetInfo(parent.InteractionCell + new IntVec3(0, 0, -2), parent.Map);
-			else if (rot == Rot4.East)
+			if (rot == Rot4.East)
 				return new TargetInfo(parent.InteractionCell + new IntVec3(-2, 0, 0), parent.Map);
-			else if (rot == Rot4.South)
-				return new TargetInfo(parent.InteractionCell + new IntVec3(0, 0, 2), parent.Map);
-			else if (rot == Rot4.West)
-				return new TargetInfo(parent.InteractionCell + new IntVec3(2, 0, 0), parent.Map);
 			return parent;
 		}
 	}
