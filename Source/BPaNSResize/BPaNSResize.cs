@@ -240,9 +240,10 @@ namespace BPaNSResize
 					fleckSize = new Vector2(1, 2);
 					break;
 			}
-			
+
 			StaticStuff.BiosculpterPodDef.graphicData = graphicData;
 			StaticStuff.BiosculpterPodDef.graphic = graphicData.Graphic;
+			StaticStuff.BiosculpterPodDef.uiIcon = (Texture2D)graphicData.Graphic.MatSouth.mainTexture;
 			StaticStuff.BiosculpterPodDef.size = buildingSize;
 			StaticStuff.BiosculpterPodDef.interactionCellOffset = interactionCellOffset;
 		}
@@ -282,6 +283,7 @@ namespace BPaNSResize
 
 			StaticStuff.NeuralSuperchargerDef.graphicData = graphicData;
 			StaticStuff.NeuralSuperchargerDef.graphic = graphicData.Graphic;
+			StaticStuff.NeuralSuperchargerDef.uiIcon = (Texture2D)graphicData.Graphic.MatSouth.mainTexture;
 			StaticStuff.NeuralSuperchargerDef.size = size;
 
 			StaticStuff.NeuralSuperchargerChargedFloorDef.graphicData.drawSize = size.ToVector2();
