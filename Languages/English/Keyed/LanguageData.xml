@@ -4,6 +4,10 @@
 	<SY_BNR.BiosculpterPodTitle>Biosculpter Pod</SY_BNR.BiosculpterPodTitle>
 	<SY_BNR.BiosculpterPodDesc>Biosculpter pod dimensions
 Changes require reloading to apply properly!</SY_BNR.BiosculpterPodDesc>
+
+	<SY_BNR.BiosculpterPodInteractionSpotOverlapTitle>Biosculpter Pod - Overlapping Interaction Spot</SY_BNR.BiosculpterPodInteractionSpotOverlapTitle>
+	<SY_BNR.BiosculpterPodInteractionSpotOverlapDesc>Allow Biosculpter Pod's interaction spot to overlap</SY_BNR.BiosculpterPodInteractionSpotOverlapDesc>
+
 	<SY_BNR.NeuralSuperchargerTitle>Neural Supercharger</SY_BNR.NeuralSuperchargerTitle>
 	<SY_BNR.NeuralSuperchargerDesc>Neural supercharger dimensions
 Changes require reloading to apply properly!</SY_BNR.NeuralSuperchargerDesc>

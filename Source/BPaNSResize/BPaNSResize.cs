@@ -187,6 +187,7 @@ namespace BPaNSResize
 			Modded_1x3,
 		}
 		private SettingHandle<BiosculpterPodSize> _biosculpterPodSize;
+		private SettingHandle<bool> _biosculpterPodInteractionSpotOverlap;
 
 		enum ColorSelector
 		{
@@ -215,6 +216,14 @@ namespace BPaNSResize
 				enumPrefix: "SY_BNR.BiosculpterPodSize_");
 			_biosculpterPodSize.ValueChanged += (value) => ChangeBiosculpterPodSize((SettingHandle<BiosculpterPodSize>)value);
 			ChangeBiosculpterPodSize(_biosculpterPodSize);
+
+			_biosculpterPodInteractionSpotOverlap = Settings.GetHandle(
+				"biosculpterPodInteractionSpotOverlap",
+				"SY_BNR.BiosculpterPodInteractionSpotOverlapTitle".Translate(),
+				"SY_BNR.BiosculpterPodInteractionSpotOverlapDesc".Translate(), 
+				false);
+			_biosculpterPodInteractionSpotOverlap.ValueChanged += (value) => ChangeBiosculpterPodInteractionSpotOverlap((SettingHandle<bool>)value);
+			ChangeBiosculpterPodInteractionSpotOverlap(_biosculpterPodInteractionSpotOverlap);
 
 			_biosculpterPodReadyEffecterColorR = Settings.GetHandle(
 				"biosculpterPodReadyEffecterColorR",
@@ -290,6 +299,14 @@ namespace BPaNSResize
 			ChangeDef(StaticStuff.BiosculpterPodDef, graphicData, graphicData_Blueprint, buildingSize, interactionCellOffset);
 		}
 
+		private void ChangeBiosculpterPodInteractionSpotOverlap(bool allowOverlapping)
+		{
+			if (!allowOverlapping)
+				StaticStuff.BiosculpterPodDef.placeWorkers.AddIfNotContains(typeof(PlaceWorker_PreventInteractionSpotOverlap));
+			else
+				StaticStuff.BiosculpterPodDef.placeWorkers.Remove(typeof(PlaceWorker_PreventInteractionSpotOverlap));
+		}
+
 		private void ChangeBiosculpterPodReadyColor(ColorSelector rgb, float value)
 		{
 			switch (rgb)
@@ -332,23 +349,38 @@ namespace BPaNSResize
 
 		private void ChangeDef(ThingDef thingDef, GraphicData graphicData, GraphicData graphicData_Blueprint, IntVec2 buildingSize, IntVec3? interactionCellOffset = null)
 		{
+			// Change thingDef size, graphic and ui icon
 			thingDef.size = buildingSize;
 			thingDef.graphicData = graphicData;
 			thingDef.graphic = graphicData.Graphic;
 			thingDef.uiIcon = (Texture2D)graphicData.Graphic.MatSouth.mainTexture;
 
+			// Change interaction cell offset if desired
 			if (interactionCellOffset != null)
 				thingDef.interactionCellOffset = (IntVec3)interactionCellOffset;
 
+			// Change blueprint size and graphic
 			thingDef.blueprintDef.size = buildingSize;
 			thingDef.blueprintDef.graphicData = graphicData_Blueprint;
 			thingDef.blueprintDef.graphic = graphicData_Blueprint.Graphic;
 
+			// Change install blueprint size and graphic
 			thingDef.installBlueprintDef.size = buildingSize;
 			thingDef.installBlueprintDef.graphicData = graphicData_Blueprint;
 			thingDef.installBlueprintDef.graphic = graphicData_Blueprint.Graphic;
 
+			// Change build frame size
 			thingDef.frameDef.size = buildingSize;
+
+			// Fix build copy icon proportions; I really wonder if there isn't a better way for doing this...
+			foreach (var x in thingDef.designationCategory.AllResolvedDesignators)
+			{
+				if (x is Designator_Build build && build.PlacingDef == thingDef)
+				{
+					build.iconProportions = buildingSize.ToVector2();
+					break;
+				}
+			}
 		}
 	}
 
@@ -442,6 +474,15 @@ namespace BPaNSResize
 			if (rot == Rot4.East)
 				return new TargetInfo(parent.InteractionCell + new IntVec3(-2, 0, 0), parent.Map);
 			return parent;
+		}
+	}
+
+	public static class ListExtension
+	{
+		public static void AddIfNotContains<T>(this List<T> list, T item)
+		{
+			if (!list.Contains(item))
+				list.Add(item);
 		}
 	}
 }
