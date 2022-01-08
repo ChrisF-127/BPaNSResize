@@ -16,84 +16,90 @@ namespace BPaNSResize
 	[StaticConstructorOnStartup]
 	internal static class StaticStuff
 	{
+		public static Color BlueprintColor;
+
 		public static ThingDef BiosculpterPodDef;
 		public static GraphicData BiosculpterPodGraphicData_Standard;
+		public static GraphicData BiosculpterPodGraphicData_Standard_Blueprint;
 		public static GraphicData BiosculpterPodGraphicData_2x2_Left = new GraphicData();
+		public static GraphicData BiosculpterPodGraphicData_2x2_Left_Blueprint;
 		public static GraphicData BiosculpterPodGraphicData_2x2_Right = new GraphicData();
+		public static GraphicData BiosculpterPodGraphicData_2x2_Right_Blueprint;
 		public static GraphicData BiosculpterPodGraphicData_1x2 = new GraphicData();
+		public static GraphicData BiosculpterPodGraphicData_1x2_Blueprint;
 		public static GraphicData BiosculpterPodGraphicData_1x3 = new GraphicData();
+		public static GraphicData BiosculpterPodGraphicData_1x3_Blueprint;
 
 		public static Color OriginalSelectCycleColor;
 
 		public static ThingDef NeuralSuperchargerDef;
 		public static GraphicData NeuralSuperchargerGraphicData_Standard;
+		public static GraphicData NeuralSuperchargerGraphicData_Standard_Blueprint;
 		public static GraphicData NeuralSuperchargerGraphicData_1x2 = new GraphicData();
+		public static GraphicData NeuralSuperchargerGraphicData_1x2_Blueprint;
 		public static FleckDef NeuralSuperchargerChargedFloorDef;
 
 		static StaticStuff()
 		{
+			BlueprintColor = (Color)typeof(ThingDefGenerator_Buildings).GetField("BlueprintColor", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+
 			// Get Biosculpter def
 			BiosculpterPodDef = ThingDefOf.BiosculpterPod;
-			// Get standard Biosculpter graphic
 			BiosculpterPodGraphicData_Standard = BiosculpterPodDef.graphicData;
-
-			// Standard shadow height / length
+			BiosculpterPodGraphicData_Standard_Blueprint = BiosculpterPodDef.blueprintDef.graphicData;
 			var shadowDataVolumeY = BiosculpterPodGraphicData_Standard.shadowData.BaseY;
 
 			// Initialize 2x2 Biosculpter Pod graphic (left handed)
-			BiosculpterPodGraphicData_2x2_Left.CopyFrom(BiosculpterPodGraphicData_Standard);
-			BiosculpterPodGraphicData_2x2_Left.texPath = "BiosculpterPod/BiosculpterPod_2x2_Left";
-			BiosculpterPodGraphicData_2x2_Left.drawSize = new Vector2(2, 2);
-			BiosculpterPodGraphicData_2x2_Left.shadowData = new ShadowData
-			{
-				volume = new Vector3(1.9f, shadowDataVolumeY, 1.9f)
-			};
-			BiosculpterPodGraphicData_2x2_Left.ExplicitlyInitCachedGraphic();
+			MakeGraphicData(
+				BiosculpterPodGraphicData_Standard,
+				ref BiosculpterPodGraphicData_2x2_Left,
+				ref BiosculpterPodGraphicData_2x2_Left_Blueprint,
+				"BiosculpterPod/BiosculpterPod_2x2_Left",
+				new Vector2(2, 2),
+				shadowDataVolumeY);
 
 			// Initialize 2x2 Biosculpter Pod graphic (right handed)
-			BiosculpterPodGraphicData_2x2_Right.CopyFrom(BiosculpterPodGraphicData_Standard);
-			BiosculpterPodGraphicData_2x2_Right.texPath = "BiosculpterPod/BiosculpterPod_2x2_Right";
-			BiosculpterPodGraphicData_2x2_Right.drawSize = new Vector2(2, 2);
-			BiosculpterPodGraphicData_2x2_Right.shadowData = new ShadowData
-			{
-				volume = new Vector3(1.9f, shadowDataVolumeY, 1.9f)
-			};
-			BiosculpterPodGraphicData_2x2_Right.ExplicitlyInitCachedGraphic();
+			MakeGraphicData(
+				BiosculpterPodGraphicData_Standard,
+				ref BiosculpterPodGraphicData_2x2_Right,
+				ref BiosculpterPodGraphicData_2x2_Right_Blueprint,
+				"BiosculpterPod/BiosculpterPod_2x2_Right",
+				new Vector2(2, 2),
+				shadowDataVolumeY);
 
 			// Initialize 1x2 Biosculpter Pod graphic
-			BiosculpterPodGraphicData_1x2.CopyFrom(BiosculpterPodGraphicData_Standard);
-			BiosculpterPodGraphicData_1x2.texPath = "BiosculpterPod/BiosculpterPod_2x1";
-			BiosculpterPodGraphicData_1x2.drawSize = new Vector2(1, 2);
-			BiosculpterPodGraphicData_1x2.shadowData = new ShadowData
-			{
-				volume = new Vector3(0.9f, shadowDataVolumeY, 1.9f)
-			};
-			BiosculpterPodGraphicData_1x2.ExplicitlyInitCachedGraphic();
+			MakeGraphicData(
+				BiosculpterPodGraphicData_Standard,
+				ref BiosculpterPodGraphicData_1x2,
+				ref BiosculpterPodGraphicData_1x2_Blueprint,
+				"BiosculpterPod/BiosculpterPod_1x2",
+				new Vector2(1, 2),
+				shadowDataVolumeY);
 
 			// Initialize 1x3 Biosculpter Pod graphic
-			BiosculpterPodGraphicData_1x3.CopyFrom(BiosculpterPodGraphicData_Standard);
-			BiosculpterPodGraphicData_1x3.texPath = "BiosculpterPod/BiosculpterPod_3x1";
-			BiosculpterPodGraphicData_1x3.drawSize = new Vector2(1, 3);
-			BiosculpterPodGraphicData_1x3.shadowData = new ShadowData
-			{
-				volume = new Vector3(0.9f, shadowDataVolumeY, 2.9f)
-			};
-			BiosculpterPodGraphicData_1x3.ExplicitlyInitCachedGraphic();
+			MakeGraphicData(
+				BiosculpterPodGraphicData_Standard,
+				ref BiosculpterPodGraphicData_1x3,
+				ref BiosculpterPodGraphicData_1x3_Blueprint,
+				"BiosculpterPod/BiosculpterPod_1x3",
+				new Vector2(1, 3),
+				shadowDataVolumeY);
 
 
 			// Get Neural Supercharger def
 			NeuralSuperchargerDef = ThingDefOf.NeuralSupercharger;
 			NeuralSuperchargerGraphicData_Standard = NeuralSuperchargerDef.graphicData;
+			NeuralSuperchargerGraphicData_Standard_Blueprint = NeuralSuperchargerDef.blueprintDef.graphicData;
+			shadowDataVolumeY = NeuralSuperchargerGraphicData_Standard.shadowData.BaseY;
 
 			// Initialize 1x2 Neural Supercharger graphic
-			NeuralSuperchargerGraphicData_1x2.CopyFrom(NeuralSuperchargerGraphicData_Standard);
-			NeuralSuperchargerGraphicData_1x2.texPath = "NeuralSupercharger/NeuralSupercharger_2x1";
-			NeuralSuperchargerGraphicData_1x2.drawSize = new Vector2(1, 2);
-			NeuralSuperchargerGraphicData_1x2.shadowData = new ShadowData
-			{
-				volume = new Vector3(0.9f, shadowDataVolumeY, 1.9f)
-			};
-			NeuralSuperchargerGraphicData_1x2.ExplicitlyInitCachedGraphic();
+			MakeGraphicData(
+				NeuralSuperchargerGraphicData_Standard,
+				ref NeuralSuperchargerGraphicData_1x2,
+				ref NeuralSuperchargerGraphicData_1x2_Blueprint,
+				"NeuralSupercharger/NeuralSupercharger_1x2",
+				new Vector2(1, 2),
+				shadowDataVolumeY);
 
 			// Get Neural Supercharger charged floor effect def
 			NeuralSuperchargerChargedFloorDef = DefDatabase<FleckDef>.AllDefs.First((def) => def.defName == "NeuralSuperchargerChargedFloor");
@@ -146,6 +152,27 @@ namespace BPaNSResize
 
 			// Save original color for the ready effecter
 			OriginalSelectCycleColor = BiosculpterPodDef.GetCompProperties<CompProperties_BiosculpterPod>().selectCycleColor;
+		}
+
+		private static void MakeGraphicData(GraphicData standard, ref GraphicData graphicData, ref GraphicData graphicData_Blueprint, string texPath, Vector2 drawSize, float shadowDataVolumeY)
+		{
+			graphicData = new GraphicData();
+			graphicData.CopyFrom(standard);
+			graphicData.texPath = texPath;
+			graphicData.drawSize = drawSize;
+			graphicData.shadowData = new ShadowData
+			{
+				volume = new Vector3(drawSize.x - .1f, shadowDataVolumeY, drawSize.y - .1f)
+			};
+			graphicData.ExplicitlyInitCachedGraphic();
+
+			graphicData_Blueprint = new GraphicData();
+			graphicData_Blueprint.CopyFrom(graphicData);
+			graphicData_Blueprint.shaderType = ShaderTypeDefOf.EdgeDetect;
+			graphicData_Blueprint.color = BlueprintColor;
+			graphicData_Blueprint.colorTwo = Color.white;
+			graphicData_Blueprint.shadowData = null;
+			graphicData_Blueprint.ExplicitlyInitCachedGraphic();
 		}
 	}
 
@@ -224,6 +251,7 @@ namespace BPaNSResize
 		private void ChangeBiosculpterPodSize(BiosculpterPodSize value)
 		{
 			GraphicData graphicData;
+			GraphicData graphicData_Blueprint;
 			IntVec2 buildingSize;
 			Vector2 fleckSize = new Vector2(1, 2);
 			IntVec3 interactionCellOffset = new IntVec3(0, 0, 2);
@@ -232,33 +260,34 @@ namespace BPaNSResize
 				default:
 				case BiosculpterPodSize.Standard_3x2:
 					graphicData = StaticStuff.BiosculpterPodGraphicData_Standard;
+					graphicData_Blueprint = StaticStuff.BiosculpterPodGraphicData_Standard_Blueprint;
 					buildingSize = new IntVec2(3, 2);
 					fleckSize = new Vector2(2, 2);
 					break;
 				case BiosculpterPodSize.Modded_2x2_Left:
 					graphicData = StaticStuff.BiosculpterPodGraphicData_2x2_Left;
+					graphicData_Blueprint = StaticStuff.BiosculpterPodGraphicData_2x2_Left_Blueprint;
 					buildingSize = new IntVec2(2, 2);
 					interactionCellOffset = new IntVec3(1, 0, 2);
 					break;
 				case BiosculpterPodSize.Modded_2x2_Right:
 					graphicData = StaticStuff.BiosculpterPodGraphicData_2x2_Right;
+					graphicData_Blueprint = StaticStuff.BiosculpterPodGraphicData_2x2_Right_Blueprint;
 					buildingSize = new IntVec2(2, 2);
 					break;
 				case BiosculpterPodSize.Modded_1x2:
 					graphicData = StaticStuff.BiosculpterPodGraphicData_1x2;
+					graphicData_Blueprint = StaticStuff.BiosculpterPodGraphicData_1x2_Blueprint;
 					buildingSize = new IntVec2(1, 2);
 					break;
 				case BiosculpterPodSize.Modded_1x3:
 					graphicData = StaticStuff.BiosculpterPodGraphicData_1x3;
+					graphicData_Blueprint = StaticStuff.BiosculpterPodGraphicData_1x3_Blueprint;
 					buildingSize = new IntVec2(1, 3);
 					break;
 			}
 
-			StaticStuff.BiosculpterPodDef.graphicData = graphicData;
-			StaticStuff.BiosculpterPodDef.graphic = graphicData.Graphic;
-			StaticStuff.BiosculpterPodDef.uiIcon = (Texture2D)graphicData.Graphic.MatSouth.mainTexture;
-			StaticStuff.BiosculpterPodDef.size = buildingSize;
-			StaticStuff.BiosculpterPodDef.interactionCellOffset = interactionCellOffset;
+			ChangeDef(StaticStuff.BiosculpterPodDef, graphicData, graphicData_Blueprint, buildingSize, interactionCellOffset);
 		}
 
 		private void ChangeBiosculpterPodReadyColor(ColorSelector rgb, float value)
@@ -280,26 +309,46 @@ namespace BPaNSResize
 		private void ChangeNeuralSuperchargerSize(NeuralSuperchargerSize value)
 		{
 			GraphicData graphicData;
-			IntVec2 size;
+			GraphicData graphicData_Blueprint;
+			IntVec2 buildingSize;
 			switch (value)
 			{
 				default:
 				case NeuralSuperchargerSize.Standard_1x3:
 					graphicData = StaticStuff.NeuralSuperchargerGraphicData_Standard;
-					size = new IntVec2(1, 3);
+					graphicData_Blueprint = StaticStuff.NeuralSuperchargerGraphicData_Standard_Blueprint;
+					buildingSize = new IntVec2(1, 3);
 					break;
 				case NeuralSuperchargerSize.Modded_1x2:
 					graphicData = StaticStuff.NeuralSuperchargerGraphicData_1x2;
-					size = new IntVec2(1, 2);
+					graphicData_Blueprint = StaticStuff.NeuralSuperchargerGraphicData_1x2_Blueprint;
+					buildingSize = new IntVec2(1, 2);
 					break;
 			}
 
-			StaticStuff.NeuralSuperchargerDef.graphicData = graphicData;
-			StaticStuff.NeuralSuperchargerDef.graphic = graphicData.Graphic;
-			StaticStuff.NeuralSuperchargerDef.uiIcon = (Texture2D)graphicData.Graphic.MatSouth.mainTexture;
-			StaticStuff.NeuralSuperchargerDef.size = size;
+			ChangeDef(StaticStuff.NeuralSuperchargerDef, graphicData, graphicData_Blueprint, buildingSize);
+			StaticStuff.NeuralSuperchargerChargedFloorDef.graphicData.drawSize = buildingSize.ToVector2();
+		}
 
-			StaticStuff.NeuralSuperchargerChargedFloorDef.graphicData.drawSize = size.ToVector2();
+		private void ChangeDef(ThingDef thingDef, GraphicData graphicData, GraphicData graphicData_Blueprint, IntVec2 buildingSize, IntVec3? interactionCellOffset = null)
+		{
+			thingDef.size = buildingSize;
+			thingDef.graphicData = graphicData;
+			thingDef.graphic = graphicData.Graphic;
+			thingDef.uiIcon = (Texture2D)graphicData.Graphic.MatSouth.mainTexture;
+
+			if (interactionCellOffset != null)
+				thingDef.interactionCellOffset = (IntVec3)interactionCellOffset;
+
+			thingDef.blueprintDef.size = buildingSize;
+			thingDef.blueprintDef.graphicData = graphicData_Blueprint;
+			thingDef.blueprintDef.graphic = graphicData_Blueprint.Graphic;
+
+			thingDef.installBlueprintDef.size = buildingSize;
+			thingDef.installBlueprintDef.graphicData = graphicData_Blueprint;
+			thingDef.installBlueprintDef.graphic = graphicData_Blueprint.Graphic;
+
+			thingDef.frameDef.size = buildingSize;
 		}
 	}
 
