@@ -63,7 +63,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BPaNSResize.cs" />
+    <Compile Include="HarmonyPatches.cs" />
+    <Compile Include="ListExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticStuff.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
