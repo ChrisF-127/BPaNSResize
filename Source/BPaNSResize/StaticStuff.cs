@@ -3,6 +3,7 @@ using RimWorld;
 using Verse;
 using UnityEngine;
 using System.Reflection;
+using System;
 
 namespace BPaNSResize
 {
@@ -24,6 +25,10 @@ namespace BPaNSResize
 		public static GraphicData BiosculpterPodGraphicData_1x3_Blueprint;
 
 		public static Color OriginalSelectCycleColor;
+		public static EffecterDef BiosculpterPod_Ready;
+		public static FleckDef BiosculpterScanner_Ready;
+		// FadeIn, FadeOut, Solid
+		public static Tuple<float, float, float> OriginalBiosculpterScanner_ReadyValues;
 
 		public static ThingDef NeuralSuperchargerDef;
 		public static GraphicData NeuralSuperchargerGraphicData_Standard;
@@ -101,27 +106,25 @@ namespace BPaNSResize
 			// Fix effecter position; necessary since we make the effect appear between the interaction spot and 1.5 cells away from it depending on rotation, 
 			//	but it needs to be 1 cells away, which TargetInfo does not allow for without giving it a Thing with a fitting center which we do not have on 2x2
 			EffecterDef biosculpterPod_Operating = null;
-			EffecterDef biosculpterPod_Ready = null;
 			foreach (var def in DefDatabase<EffecterDef>.AllDefs)
 			{
 				if (biosculpterPod_Operating == null
 					   && def.defName == "BiosculpterPod_Operating")
 					biosculpterPod_Operating = def;
-				else if (biosculpterPod_Ready == null
+				else if (BiosculpterPod_Ready == null
 					   && def.defName == "BiosculpterPod_Ready")
-					biosculpterPod_Ready = def;
+					BiosculpterPod_Ready = def;
 
 				if (biosculpterPod_Operating != null
-					&& biosculpterPod_Ready != null)
+					&& BiosculpterPod_Ready != null)
 					break;
 			}
 			biosculpterPod_Operating.offsetTowardsTarget = new FloatRange(0.5f, 0.5f);
-			biosculpterPod_Ready.offsetTowardsTarget = new FloatRange(0.5f, 0.5f);
+			BiosculpterPod_Ready.offsetTowardsTarget = new FloatRange(0.5f, 0.5f);
 
 			// Resize FleckDefs for the Effecters to look more fitting for the smaller buildings
 			FleckDef biosculpterScanner_Forward = null;
 			FleckDef biosculpterScanner_Backward = null;
-			FleckDef biosculpterScanner_Ready = null;
 			foreach (var def in DefDatabase<FleckDef>.AllDefs)
 			{
 				if (biosculpterScanner_Forward == null
@@ -130,18 +133,19 @@ namespace BPaNSResize
 				else if (biosculpterScanner_Backward == null
 					   && def.defName == "BiosculpterScanner_Backward")
 					biosculpterScanner_Backward = def;
-				else if (biosculpterScanner_Ready == null
+				else if (BiosculpterScanner_Ready == null
 					   && def.defName == "BiosculpterScanner_Ready")
-					biosculpterScanner_Ready = def;
+					BiosculpterScanner_Ready = def;
 
 				if (biosculpterScanner_Forward != null
 					&& biosculpterScanner_Backward != null
-					&& biosculpterScanner_Ready != null)
+					&& BiosculpterScanner_Ready != null)
 					break;
 			}
 			biosculpterScanner_Forward.graphicData.drawSize = new Vector2(1.5f, 0.5f); // standard is 3x1
 			biosculpterScanner_Backward.graphicData.drawSize = new Vector2(1f, 0.5f); // standard is 2x1
-			biosculpterScanner_Ready.graphicData.drawSize = new Vector2(1f, 2f); // standard is 2x2
+			BiosculpterScanner_Ready.graphicData.drawSize = new Vector2(1f, 2f); // standard is 2x2
+			OriginalBiosculpterScanner_ReadyValues = new Tuple<float, float, float>(BiosculpterScanner_Ready.fadeInTime, BiosculpterScanner_Ready.fadeOutTime, BiosculpterScanner_Ready.solidTime);
 
 			// Save original color for the ready effecter
 			OriginalSelectCycleColor = BiosculpterPodDef.GetCompProperties<CompProperties_BiosculpterPod>().selectCycleColor;

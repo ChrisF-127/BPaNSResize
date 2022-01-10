@@ -7,19 +7,14 @@ Changes require reloading to apply properly!</SY_BNR.BiosculpterPodDesc>
 
 	<SY_BNR.BiosculpterPodInteractionSpotOverlapTitle>Biosculpter Pod - Overlapping Interaction Spot</SY_BNR.BiosculpterPodInteractionSpotOverlapTitle>
 	<SY_BNR.BiosculpterPodInteractionSpotOverlapDesc>Allow Biosculpter Pod's interaction spot to overlap</SY_BNR.BiosculpterPodInteractionSpotOverlapDesc>
-
-	<SY_BNR.NeuralSuperchargerTitle>Neural Supercharger</SY_BNR.NeuralSuperchargerTitle>
-	<SY_BNR.NeuralSuperchargerDesc>Neural supercharger dimensions
-Changes require reloading to apply properly!</SY_BNR.NeuralSuperchargerDesc>
 	
-	<SY_BNR.BiosculpterPodSize_Standard_3x2>3x2 (Standard)</SY_BNR.BiosculpterPodSize_Standard_3x2>
-	<SY_BNR.BiosculpterPodSize_Modded_2x2_Left>2x2 (left)</SY_BNR.BiosculpterPodSize_Modded_2x2_Left>
-	<SY_BNR.BiosculpterPodSize_Modded_2x2_Right>2x2 (right)</SY_BNR.BiosculpterPodSize_Modded_2x2_Right>
-	<SY_BNR.BiosculpterPodSize_Modded_1x2>1x2</SY_BNR.BiosculpterPodSize_Modded_1x2>
-	<SY_BNR.BiosculpterPodSize_Modded_1x3>1x3</SY_BNR.BiosculpterPodSize_Modded_1x3>
-	
-	<SY_BNR.NeuralSuperchargerSize_Standard_1x3>1x3 (Standard)</SY_BNR.NeuralSuperchargerSize_Standard_1x3>
-	<SY_BNR.NeuralSuperchargerSize_Modded_1x2>1x2</SY_BNR.NeuralSuperchargerSize_Modded_1x2>
+	<SY_BNR.BiosculpterPodReadyEffecterAlwaysOnTitle>Biosculpter Pod Ready Effect - Always ON</SY_BNR.BiosculpterPodReadyEffecterAlwaysOnTitle>
+	<SY_BNR.BiosculpterPodReadyEffecterAlwaysOnDesc>Change ready effect into solid color
+Mutually exclusive with "always off"</SY_BNR.BiosculpterPodReadyEffecterAlwaysOnDesc>
+	<SY_BNR.BiosculpterPodReadyEffecterAlwaysOffTitle>Biosculpter Pod Ready Effect - Always OFF</SY_BNR.BiosculpterPodReadyEffecterAlwaysOffTitle>
+	<SY_BNR.BiosculpterPodReadyEffecterAlwaysOffDesc>Disable ready effect
+Mutually exclusive with "always on"
+Color settings will not have any effect</SY_BNR.BiosculpterPodReadyEffecterAlwaysOffDesc>
 	
 	<SY_BNR.BiosculpterPodReadyEffecterColorRTitle>Biosculpter Ready Effect - Red</SY_BNR.BiosculpterPodReadyEffecterColorRTitle>
 	<SY_BNR.BiosculpterPodReadyEffecterColorRDesc>Adjust the color (red) of the blinking effect when the Biosculpter is ready
@@ -33,5 +28,19 @@ Changes require reloading!
 	<SY_BNR.BiosculpterPodReadyEffecterColorBDesc>Adjust the color (blue) of the blinking effect when the Biosculpter is ready
 Changes require reloading!
 (I recommend R .5, G 1, B 1)</SY_BNR.BiosculpterPodReadyEffecterColorBDesc>
+
+	<SY_BNR.NeuralSuperchargerTitle>Neural Supercharger</SY_BNR.NeuralSuperchargerTitle>
+	<SY_BNR.NeuralSuperchargerDesc>Neural supercharger dimensions
+Changes require reloading to apply properly!</SY_BNR.NeuralSuperchargerDesc>
+
+	
+	<SY_BNR.BiosculpterPodSize_Standard_3x2>3x2 (Standard)</SY_BNR.BiosculpterPodSize_Standard_3x2>
+	<SY_BNR.BiosculpterPodSize_Modded_2x2_Left>2x2 (left)</SY_BNR.BiosculpterPodSize_Modded_2x2_Left>
+	<SY_BNR.BiosculpterPodSize_Modded_2x2_Right>2x2 (right)</SY_BNR.BiosculpterPodSize_Modded_2x2_Right>
+	<SY_BNR.BiosculpterPodSize_Modded_1x2>1x2</SY_BNR.BiosculpterPodSize_Modded_1x2>
+	<SY_BNR.BiosculpterPodSize_Modded_1x3>1x3</SY_BNR.BiosculpterPodSize_Modded_1x3>
+	
+	<SY_BNR.NeuralSuperchargerSize_Standard_1x3>1x3 (Standard)</SY_BNR.NeuralSuperchargerSize_Standard_1x3>
+	<SY_BNR.NeuralSuperchargerSize_Modded_1x2>1x2</SY_BNR.NeuralSuperchargerSize_Modded_1x2>
 	
 </LanguageData>
