@@ -26,24 +26,20 @@ namespace BPaNSResize
 		static IEnumerable<CodeInstruction> CompBiosculpterPod_PostDraw_Transpiler(IEnumerable<CodeInstruction> instructions)
 		{
 			var list = new List<CodeInstruction>(instructions);
-			for (int i = 0; i < list.Count; i++)
+			for (int i = 0; i < list.Count - 2; i++)
 			{
-				var instruction = list[i];
-				//Log.Message(instruction.ToString());
-				if (i < list.Count - 2
-					&& instruction.opcode == OpCodes.Callvirt
-					&& list[i + 2].opcode == OpCodes.Call
-					&& instruction.operand is MethodBase method0
-					&& list[i + 2].operand is MethodBase method1
-					&& method0.Name == "get_DrawPos"
-					&& method1.Name == "FloatingOffset")
+				//Log.Message(list[i].ToString());
+				if (list[i].opcode == OpCodes.Callvirt && list[i].operand is MethodBase mi && mi.Name == "get_DrawPos"
+					&& list[i + 1].opcode == OpCodes.Ldarg_0
+					&& list[i + 2].opcode == OpCodes.Ldfld)
 				{
-					instruction.opcode = OpCodes.Call;
-					instruction.operand = typeof(HarmonyPatches).GetMethod(nameof(HarmonyPatches.ModifyPawnDrawOffset));
-					//Log.Warning("REPLACED: " + instruction.ToString());
+					list[i].opcode = OpCodes.Call;
+					list[i].operand = typeof(HarmonyPatches).GetMethod(nameof(HarmonyPatches.ModifyPawnDrawOffset));
+					//Log.Warning("REPLACED: " + list[i].ToString());
+					break;
 				}
-				yield return instruction;
 			}
+			return list;
 		}
 
 		static IEnumerable<CodeInstruction> CompBiosculpterPod_CompTick_Transpiler(IEnumerable<CodeInstruction> instructions)
