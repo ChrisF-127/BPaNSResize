@@ -64,15 +64,6 @@ exit /b 1
 )
 
 set dir=$(TargetDir)
-set search=RimWorld\Mods
-if "x!dir:%25search%25=!"=="x%25dir%25" (
-set "deploy=D:\0Stuff\RimWorld\_mods\_deploy.bat"
-if exist "!deploy!" (
-!deploy! BPaNSResize
-) else (
-echo DEPLOY-SCRIPT NOT FOUND!
-echo Remember to move files to "...\RimWorld\Mods"!
-)
-)</PostBuildEvent>
+if "x!dir:RimWorld\Mods=!"=="x%25dir%25" D:\0Stuff\RimWorld\_mods\_deploy.bat $(TargetName)</PostBuildEvent>
   </PropertyGroup>
 </Project>
