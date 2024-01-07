@@ -48,14 +48,14 @@ namespace BPaNSResize
 				"SY_BNR.BiosculpterPodDesc".Translate(), 
 				BiosculpterPodSize.Standard_3x2,
 				enumPrefix: "SY_BNR.BiosculpterPodSize_");
-			_biosculpterPodSize.ValueChanged += (value) => ChangeBiosculpterPodSize((SettingHandle<BiosculpterPodSize>)value);
+			_biosculpterPodSize.ValueChanged += value => ChangeBiosculpterPodSize((SettingHandle<BiosculpterPodSize>)value);
 
 			_biosculpterPodInteractionSpotOverlap = Settings.GetHandle(
 				"biosculpterPodInteractionSpotOverlap",
 				"SY_BNR.BiosculpterPodInteractionSpotOverlapTitle".Translate(),
 				"SY_BNR.BiosculpterPodInteractionSpotOverlapDesc".Translate(), 
 				false);
-			_biosculpterPodInteractionSpotOverlap.ValueChanged += (value) => ChangeBiosculpterPodInteractionSpotOverlap((SettingHandle<bool>)value);
+			_biosculpterPodInteractionSpotOverlap.ValueChanged += value => ChangeBiosculpterPodInteractionSpotOverlap((SettingHandle<bool>)value);
 
 
 			_biosculpterPodReadyEffecterAlwaysOn = Settings.GetHandle(
@@ -63,32 +63,32 @@ namespace BPaNSResize
 				"SY_BNR.BiosculpterPodReadyEffecterAlwaysOnTitle".Translate(),
 				"SY_BNR.BiosculpterPodReadyEffecterAlwaysOnDesc".Translate(),
 				true);
-			_biosculpterPodReadyEffecterAlwaysOn.ValueChanged += (value => ChangeBiosculpterPodReadyEffecterAlwaysOn((SettingHandle<bool>)value));
+			_biosculpterPodReadyEffecterAlwaysOn.ValueChanged += value => ChangeBiosculpterPodReadyEffecterAlwaysOn((SettingHandle<bool>)value);
 			_biosculpterPodReadyEffecterAlwaysOff = Settings.GetHandle(
 				"biosculpterPodReadyEffecterAlwaysOff",
 				"SY_BNR.BiosculpterPodReadyEffecterAlwaysOffTitle".Translate(),
 				"SY_BNR.BiosculpterPodReadyEffecterAlwaysOffDesc".Translate(),
 				true);
-			_biosculpterPodReadyEffecterAlwaysOff.ValueChanged += (value => ChangeBiosculpterPodReadyEffecterAlwaysOff((SettingHandle<bool>)value));
+			_biosculpterPodReadyEffecterAlwaysOff.ValueChanged += value => ChangeBiosculpterPodReadyEffecterAlwaysOff((SettingHandle<bool>)value);
 
 			_biosculpterPodReadyEffecterColorR = Settings.GetHandle(
 				"biosculpterPodReadyEffecterColorR",
 				"SY_BNR.BiosculpterPodReadyEffecterColorRTitle".Translate(),
 				"SY_BNR.BiosculpterPodReadyEffecterColorRDesc".Translate(),
 				StaticStuff.OriginalSelectCycleColor.r);
-			_biosculpterPodReadyEffecterColorR.ValueChanged += (value) => ChangeBiosculpterPodReadyEffecterColor(ColorSelector.R, (SettingHandle<float>)value);
+			_biosculpterPodReadyEffecterColorR.ValueChanged += value => ChangeBiosculpterPodReadyEffecterColor(ColorSelector.R, (SettingHandle<float>)value);
 			_biosculpterPodReadyEffecterColorG = Settings.GetHandle(
 				"biosculpterPodReadyEffecterColorG",
 				"SY_BNR.BiosculpterPodReadyEffecterColorGTitle".Translate(),
 				"SY_BNR.BiosculpterPodReadyEffecterColorGDesc".Translate(),
 				StaticStuff.OriginalSelectCycleColor.g);
-			_biosculpterPodReadyEffecterColorG.ValueChanged += (value) => ChangeBiosculpterPodReadyEffecterColor(ColorSelector.G, (SettingHandle<float>)value);
+			_biosculpterPodReadyEffecterColorG.ValueChanged += value => ChangeBiosculpterPodReadyEffecterColor(ColorSelector.G, (SettingHandle<float>)value);
 			_biosculpterPodReadyEffecterColorB = Settings.GetHandle(
 				"biosculpterPodReadyEffecterColorB",
 				"SY_BNR.BiosculpterPodReadyEffecterColorBTitle".Translate(),
 				"SY_BNR.BiosculpterPodReadyEffecterColorBDesc".Translate(),
 				StaticStuff.OriginalSelectCycleColor.b);
-			_biosculpterPodReadyEffecterColorB.ValueChanged += (value) => ChangeBiosculpterPodReadyEffecterColor(ColorSelector.B, (SettingHandle<float>)value);
+			_biosculpterPodReadyEffecterColorB.ValueChanged += value => ChangeBiosculpterPodReadyEffecterColor(ColorSelector.B, (SettingHandle<float>)value);
 
 
 			_neuralSuperchargerSize = Settings.GetHandle(
@@ -97,7 +97,7 @@ namespace BPaNSResize
 				"SY_BNR.NeuralSuperchargerDesc".Translate(), 
 				NeuralSuperchargerSize.Standard_1x3,
 				enumPrefix: "SY_BNR.NeuralSuperchargerSize_");
-			_neuralSuperchargerSize.ValueChanged += (value) => ChangeNeuralSuperchargerSize((SettingHandle<NeuralSuperchargerSize>)value);
+			_neuralSuperchargerSize.ValueChanged += value => ChangeNeuralSuperchargerSize((SettingHandle<NeuralSuperchargerSize>)value);
 
 
 			ChangeBiosculpterPodSize(_biosculpterPodSize);
@@ -118,7 +118,6 @@ namespace BPaNSResize
 			GraphicData graphicData;
 			GraphicData graphicData_Blueprint;
 			IntVec2 buildingSize;
-			Vector2 fleckSize = new Vector2(1, 2);
 			IntVec3 interactionCellOffset = new IntVec3(0, 0, 2);
 			switch (value)
 			{
@@ -127,7 +126,6 @@ namespace BPaNSResize
 					graphicData = StaticStuff.BiosculpterPodGraphicData_Standard;
 					graphicData_Blueprint = StaticStuff.BiosculpterPodGraphicData_Standard_Blueprint;
 					buildingSize = new IntVec2(3, 2);
-					fleckSize = new Vector2(2, 2);
 					break;
 				case BiosculpterPodSize.Modded_2x2_Left:
 					graphicData = StaticStuff.BiosculpterPodGraphicData_2x2_Left;

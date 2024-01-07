@@ -40,15 +40,23 @@ namespace BPaNSResize
 
 		static StaticStuff()
 		{
+			float? shadowDataVolumeY;
 			try
 			{
 				BlueprintColor = (Color)AccessTools.Field(typeof(ThingDefGenerator_Buildings), "BlueprintColor").GetValue(null);
+			}
+			catch
+			{
+				Log.Error($"{nameof(BPaNSResize)}: failed to find BlueprintColor");
+			}
 
+			try
+			{
 				// Get Biosculpter def
 				BiosculpterPodDef = ThingDefOf.BiosculpterPod;
 				BiosculpterPodGraphicData_Standard = BiosculpterPodDef.graphicData;
 				BiosculpterPodGraphicData_Standard_Blueprint = BiosculpterPodDef.blueprintDef.graphicData;
-				var shadowDataVolumeY = BiosculpterPodGraphicData_Standard.shadowData.BaseY;
+				shadowDataVolumeY = BiosculpterPodGraphicData_Standard.shadowData?.BaseY;
 
 				// Initialize 2x2 Biosculpter Pod graphic (left handed)
 				MakeGraphicData(
@@ -85,13 +93,23 @@ namespace BPaNSResize
 					"BiosculpterPod/BiosculpterPod_1x3",
 					new Vector2(1, 3),
 					shadowDataVolumeY);
+			}
+			catch (Exception ex)
+			{
+				Log.Error($"{nameof(BPaNSResize)}: failed at BiosculpterPodDef: {ex}\n" +
+					$" '{BiosculpterPodDef}'" +
+					$" '{BiosculpterPodDef?.graphicData}'" +
+					$" '{BiosculpterPodDef?.blueprintDef?.graphicData}'" +
+					$" '{BiosculpterPodGraphicData_Standard?.shadowData?.BaseY}'");
+			}
 
-
+			try
+			{
 				// Get Neural Supercharger def
 				NeuralSuperchargerDef = ThingDefOf.NeuralSupercharger;
 				NeuralSuperchargerGraphicData_Standard = NeuralSuperchargerDef.graphicData;
 				NeuralSuperchargerGraphicData_Standard_Blueprint = NeuralSuperchargerDef.blueprintDef.graphicData;
-				shadowDataVolumeY = NeuralSuperchargerGraphicData_Standard.shadowData.BaseY;
+				shadowDataVolumeY = NeuralSuperchargerGraphicData_Standard.shadowData?.BaseY;
 
 				// Initialize 1x2 Neural Supercharger graphic
 				MakeGraphicData(
@@ -104,18 +122,30 @@ namespace BPaNSResize
 
 				// Get Neural Supercharger charged floor effect def
 				NeuralSuperchargerChargedFloorDef = DefDatabase<FleckDef>.AllDefs.First((def) => def.defName == "NeuralSuperchargerChargedFloor");
+			}
+			catch (Exception ex)
+			{
+				Log.Error($"{nameof(BPaNSResize)}: failed at NeuralSuperchargerDef: {ex}\n" +
+					$" '{NeuralSuperchargerDef}'" +
+					$" '{NeuralSuperchargerDef?.graphicData}'" +
+					$" '{NeuralSuperchargerDef?.blueprintDef?.graphicData}'" +
+					$" '{NeuralSuperchargerGraphicData_Standard?.shadowData?.BaseY}'" +
+					$" '{NeuralSuperchargerChargedFloorDef}'");
+			}
 
 
+			EffecterDef biosculpterPod_Operating = null;
+			try
+			{
 				// Fix effecter position; necessary since we make the effect appear between the interaction spot and 1.5 cells away from it depending on rotation, 
 				//	but it needs to be 1 cells away, which TargetInfo does not allow for without giving it a Thing with a fitting center which we do not have on 2x2
-				EffecterDef biosculpterPod_Operating = null;
 				foreach (var def in DefDatabase<EffecterDef>.AllDefs)
 				{
 					if (biosculpterPod_Operating == null
-						   && def.defName == "BiosculpterPod_Operating")
+							&& def.defName == "BiosculpterPod_Operating")
 						biosculpterPod_Operating = def;
 					else if (BiosculpterPod_Ready == null
-						   && def.defName == "BiosculpterPod_Ready")
+							&& def.defName == "BiosculpterPod_Ready")
 						BiosculpterPod_Ready = def;
 
 					if (biosculpterPod_Operating != null
@@ -124,20 +154,29 @@ namespace BPaNSResize
 				}
 				biosculpterPod_Operating.offsetTowardsTarget = new FloatRange(0.5f, 0.5f);
 				BiosculpterPod_Ready.offsetTowardsTarget = new FloatRange(0.5f, 0.5f);
+			}
+			catch (Exception ex)
+			{
+				Log.Error($"{nameof(BPaNSResize)}: failed at BiosculpterPod_Operating/Ready: {ex}\n" +
+					$" '{biosculpterPod_Operating}'" +
+					$" '{BiosculpterPod_Ready}'");
+			}
 
+			FleckDef biosculpterScanner_Forward = null;
+			FleckDef biosculpterScanner_Backward = null;
+			try
+			{
 				// Resize FleckDefs for the Effecters to look more fitting for the smaller buildings
-				FleckDef biosculpterScanner_Forward = null;
-				FleckDef biosculpterScanner_Backward = null;
 				foreach (var def in DefDatabase<FleckDef>.AllDefs)
 				{
 					if (biosculpterScanner_Forward == null
-						   && def.defName == "BiosculpterScanner_Forward")
+							&& def.defName == "BiosculpterScanner_Forward")
 						biosculpterScanner_Forward = def;
 					else if (biosculpterScanner_Backward == null
-						   && def.defName == "BiosculpterScanner_Backward")
+							&& def.defName == "BiosculpterScanner_Backward")
 						biosculpterScanner_Backward = def;
 					else if (BiosculpterScanner_Ready == null
-						   && def.defName == "BiosculpterScanner_Ready")
+							&& def.defName == "BiosculpterScanner_Ready")
 						BiosculpterScanner_Ready = def;
 
 					if (biosculpterScanner_Forward != null
@@ -149,26 +188,29 @@ namespace BPaNSResize
 				biosculpterScanner_Backward.graphicData.drawSize = new Vector2(1f, 0.5f); // standard is 2x1
 				BiosculpterScanner_Ready.graphicData.drawSize = new Vector2(1f, 2f); // standard is 2x2
 				OriginalBiosculpterScanner_ReadyValues = new Tuple<float, float, float>(BiosculpterScanner_Ready.fadeInTime, BiosculpterScanner_Ready.fadeOutTime, BiosculpterScanner_Ready.solidTime);
-
-				// Save original color for the ready effecter
-				OriginalSelectCycleColor = BiosculpterPodDef.GetCompProperties<CompProperties_BiosculpterPod>().selectCycleColor;
 			}
-			catch(Exception e)
+			catch (Exception ex)
 			{
-				Log.Error($"{nameof(BPaNSResize)} encountered an exception: {e.GetType()} - {e.Message}\n{e}");
+				Log.Error($"{nameof(BPaNSResize)}: failed at FleckDefs: {ex}\n" +
+					$" '{biosculpterScanner_Forward}'" +
+					$" '{biosculpterScanner_Backward}'" +
+					$" '{BiosculpterScanner_Ready}'");
 			}
+
+			// Save original color for the ready effecter
+			OriginalSelectCycleColor = BiosculpterPodDef.GetCompProperties<CompProperties_BiosculpterPod>().selectCycleColor;
 		}
 
-		private static void MakeGraphicData(GraphicData standard, ref GraphicData graphicData, ref GraphicData graphicData_Blueprint, string texPath, Vector2 drawSize, float shadowDataVolumeY)
+		private static void MakeGraphicData(GraphicData standard, ref GraphicData graphicData, ref GraphicData graphicData_Blueprint, string texPath, Vector2 drawSize, float? shadowDataVolumeY)
 		{
 			graphicData = new GraphicData();
 			graphicData.CopyFrom(standard);
 			graphicData.texPath = texPath;
 			graphicData.drawSize = drawSize;
-			graphicData.shadowData = new ShadowData
+			graphicData.shadowData = shadowDataVolumeY is float y ? new ShadowData
 			{
-				volume = new Vector3(drawSize.x - .1f, shadowDataVolumeY, drawSize.y - .1f)
-			};
+				volume = new Vector3(drawSize.x - .1f, y, drawSize.y - .1f)
+			} : null;
 			graphicData.ExplicitlyInitCachedGraphic();
 
 			graphicData_Blueprint = new GraphicData();
