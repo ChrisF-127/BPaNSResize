@@ -17,10 +17,10 @@ namespace BPaNSResize
 			
 			harmony.Patch(
 				typeof(CompBiosculpterPod).GetMethod("PostDraw"),
-				transpiler: new HarmonyMethod(typeof(HarmonyPatches), nameof(HarmonyPatches.CompBiosculpterPod_PostDraw_Transpiler)));
+				transpiler: new HarmonyMethod(typeof(HarmonyPatches), nameof(CompBiosculpterPod_PostDraw_Transpiler)));
 			harmony.Patch(
 				typeof(CompBiosculpterPod).GetMethod("CompTick"),
-				transpiler: new HarmonyMethod(typeof(HarmonyPatches), nameof(HarmonyPatches.CompBiosculpterPod_CompTick_Transpiler)));
+				transpiler: new HarmonyMethod(typeof(HarmonyPatches), nameof(CompBiosculpterPod_CompTick_Transpiler)));
 		}
 
 		static IEnumerable<CodeInstruction> CompBiosculpterPod_PostDraw_Transpiler(IEnumerable<CodeInstruction> instructions)
@@ -34,7 +34,7 @@ namespace BPaNSResize
 					&& list[i + 2].opcode == OpCodes.Ldfld)
 				{
 					list[i].opcode = OpCodes.Call;
-					list[i].operand = typeof(HarmonyPatches).GetMethod(nameof(HarmonyPatches.ModifyPawnDrawOffset));
+					list[i].operand = typeof(HarmonyPatches).GetMethod(nameof(ModifyPawnDrawOffset));
 					//Log.Warning("REPLACED: " + list[i].ToString());
 					break;
 				}
@@ -59,7 +59,7 @@ namespace BPaNSResize
 					&& (fieldInfo.Name == "readyEffecter" || fieldInfo.Name == "operatingEffecter"))
 				{
 					instruction.opcode = OpCodes.Call;
-					instruction.operand = typeof(HarmonyPatches).GetMethod(nameof(HarmonyPatches.ModifyBiosculpterTargetInfo));
+					instruction.operand = typeof(HarmonyPatches).GetMethod(nameof(ModifyBiosculpterTargetInfo));
 					//Log.Warning("REPLACED: " + instruction.ToString());
 				}
 				yield return instruction;
