@@ -13,7 +13,7 @@ namespace BPaNSResize
 	{
 		static HarmonyPatches()
 		{
-			Harmony harmony = new Harmony("syrus.bpansresize");
+			var harmony = new Harmony("syrus.bpansresize");
 			
 			harmony.Patch(
 				typeof(CompBiosculpterPod).GetMethod("PostDraw"),

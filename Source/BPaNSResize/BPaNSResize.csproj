@@ -24,7 +24,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>embedded</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\1.5\Assemblies\</OutputPath>
+    <OutputPath>..\..\1.6\Assemblies\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BPaNSResize.cs" />
+    <Compile Include="BPaNSResizeSettings.cs" />
+    <Compile Include="ControlsBuilder.cs" />
     <Compile Include="HarmonyPatches.cs" />
     <Compile Include="ListExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -47,12 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.5.4062</Version>
+      <Version>1.6.4518</Version>
     </PackageReference>
-    <PackageReference Include="UnlimitedHugs.Rimworld.HugsLib">
-      <ExcludeAssets>runtime</ExcludeAssets>
-      <Version>11.0.3</Version>
-      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    <PackageReference Include="Lib.Harmony">
+      <Version>2.3.6</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -65,6 +65,6 @@ exit /b 1
 )
 
 set dir=$(TargetDir)
-if "x!dir:RimWorld\Mods=!"=="x%25dir%25" D:\0Stuff\RimWorld\_mods\_deploy.bat $(TargetName)</PostBuildEvent>
+if "x!dir:RimWorld\Mods=!"=="x%25dir%25" D:\0Stuff\2Games\RimWorld\_mods\_deploy.bat $(TargetName)</PostBuildEvent>
   </PropertyGroup>
 </Project>
